@@ -1,7 +1,7 @@
 {
     "name": "d3-sankey",
     "description": "D3 4.0 implementation of the Sankey plugin",
-    "repos": "https://github.com/xaranke/d3-sankey.git",
+    "repos": "https://github.com/d3/d3-sankey.git",
     "main": "build/d3-sankey.js",
     "tag": "master",
     "reposType": "npm",
@@ -9,5 +9,5 @@
         "d3-arrays": "^0.4.0",
         "d3-interpolate": "^0.2.0"
     },
-    "version": "0.2.0"
+    "version": "0.2.1"
 }

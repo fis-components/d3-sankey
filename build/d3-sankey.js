@@ -4,15 +4,13 @@
   factory((global.d3_sankey = {}),global.d3_arrays,global.d3_interpolate);
 }(this, function (exports,d3Arrays,d3Interpolate) { 'use strict';
 
-  // Stolen from https://github.com/d3/d3-plugins/tree/master/sankey
-
   function sankey() {
     var sankey = {},
-      nodeWidth = 24,
-      nodePadding = 8,
-      size = [1, 1],
-      nodes = [],
-      links = [];
+        nodeWidth = 24,
+        nodePadding = 8,
+        size = [1, 1],
+        nodes = [],
+        links = [];
 
     sankey.nodeWidth = function(_) {
       if (!arguments.length) return nodeWidth;
@@ -63,13 +61,16 @@
 
       function link(d) {
         var x0 = d.source.x + d.source.dx,
-          x1 = d.target.x,
-          xi = d3Interpolate.number(x0, x1),
-          x2 = xi(curvature),
-          x3 = xi(1 - curvature),
-          y0 = d.source.y + d.sy + d.dy / 2,
-          y1 = d.target.y + d.ty + d.dy / 2;
-        return "M" + x0 + "," + y0 + "C" + x2 + "," + y0 + " " + x3 + "," + y1 + " " + x1 + "," + y1;
+            x1 = d.target.x,
+            xi = d3Interpolate.number(x0, x1),
+            x2 = xi(curvature),
+            x3 = xi(1 - curvature),
+            y0 = d.source.y + d.sy + d.dy / 2,
+            y1 = d.target.y + d.ty + d.dy / 2;
+        return "M" + x0 + "," + y0
+             + "C" + x2 + "," + y0
+             + " " + x3 + "," + y1
+             + " " + x1 + "," + y1;
       }
 
       link.curvature = function(_) {
@@ -90,7 +91,7 @@
       });
       links.forEach(function(link) {
         var source = link.source,
-          target = link.target;
+            target = link.target;
         if (typeof source === "number") source = link.source = nodes[link.source];
         if (typeof target === "number") target = link.target = nodes[link.target];
         source.sourceLinks.push(link);
@@ -114,8 +115,8 @@
     // nodes with no outgoing links are assigned the maximum breadth.
     function computeNodeBreadths() {
       var remainingNodes = nodes,
-        nextNodes,
-        x = 0;
+          nextNodes,
+          x = 0;
 
       while (remainingNodes.length) {
         nextNodes = [];
@@ -140,9 +141,7 @@
     function moveSourcesRight() {
       nodes.forEach(function(node) {
         if (!node.targetLinks.length) {
-          node.x = d3Arrays.min(node.sourceLinks, function(d) {
-            return d.target.x;
-          }) - 1;
+          node.x = d3Arrays.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
         }
       });
     }
@@ -163,14 +162,10 @@
 
     function computeNodeDepths(iterations) {
       var nodesByBreadth = d3Arrays.nest()
-        .key(function(d) {
-          return d.x;
-        })
-        .sortKeys(d3Arrays.ascending)
-        .entries(nodes)
-        .map(function(d) {
-          return d.values;
-        });
+          .key(function(d) { return d.x; })
+          .sortKeys(d3Arrays.ascending)
+          .entries(nodes)
+          .map(function(d) { return d.values; });
 
       //
       initializeNodeDepth();
@@ -232,10 +227,10 @@
       function resolveCollisions() {
         nodesByBreadth.forEach(function(nodes) {
           var node,
-            dy,
-            y0 = 0,
-            n = nodes.length,
-            i;
+              dy,
+              y0 = 0,
+              n = nodes.length,
+              i;
 
           // Push any overlapping nodes down.
           nodes.sort(ascendingDepth);
@@ -273,8 +268,7 @@
         node.targetLinks.sort(ascendingSourceDepth);
       });
       nodes.forEach(function(node) {
-        var sy = 0,
-          ty = 0;
+        var sy = 0, ty = 0;
         node.sourceLinks.forEach(function(link) {
           link.sy = sy;
           sy += link.dy;
@@ -305,7 +299,7 @@
     return sankey;
   };
 
-  var version = "0.2.0";
+  var version = "0.2.1";
 
   exports.version = version;
   exports.sankey = sankey;
