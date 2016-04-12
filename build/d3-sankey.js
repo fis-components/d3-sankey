@@ -4,7 +4,7 @@
   factory((global.d3_sankey = {}),global.d3_arrays,global.d3_interpolate);
 }(this, function (exports,d3Arrays,d3Interpolate) { 'use strict';
 
-  // Stolen from Mike Bostock's excellent work at http://bost.ocks.org/mike/sankey/sankey.js
+  // Stolen from https://github.com/d3/d3-plugins/tree/master/sankey
 
   function sankey() {
     var sankey = {},
@@ -305,7 +305,7 @@
     return sankey;
   };
 
-  var version = "0.1.3";
+  var version = "0.2.0";
 
   exports.version = version;
   exports.sankey = sankey;
